@@ -5,7 +5,7 @@ import { Base64 } from "js-base64";
 import CryptoJS from "crypto-js";
 
 // Helper function to Base64 URL encode a string
-const base64UrlEncode = (str) => {
+const base64UrlEncode = (str: string) => {
   return Base64.encode(str)
     .replace(/\+/g, "-")
     .replace(/\//g, "_")
@@ -13,11 +13,11 @@ const base64UrlEncode = (str) => {
 };
 
 // Helper function to create HMAC SHA-256 hash
-const createHmacSha256 = (data, secret) => {
+const createHmacSha256 = (data: string, secret: string) => {
   return CryptoJS.HmacSHA256(data, secret).toString(CryptoJS.enc.Base64url);
 };
 
-const CopyButton = ({ getText }) => {
+const CopyButton = ({ getText }: { getText: () => string }) => {
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = () => {
@@ -122,7 +122,11 @@ const EncodePage = () => {
 
       setEncodedJWT(token);
     } catch (error) {
-      console.error("Encoding error:", error.message);
+      if (error instanceof Error) {
+        console.error("Encoding error:", error.message);
+      } else {
+        console.error("Unknown encoding error");
+      }
       alert(
         "Invalid payload or secret key. Please ensure the payload is valid JSON and the secret/key is correct."
       );
@@ -137,7 +141,7 @@ const EncodePage = () => {
           <div className="relative">
             <textarea
               className="w-full p-2 border border-gray-300 rounded h-[12rem]"
-              rows="5"
+              rows={5}
               placeholder='JSON payload e.g:
 {
   "username": "noluyorAbi",

@@ -151,7 +151,7 @@ const App = () => {
 
   useEffect(() => {
     handleDecode(jwtInput);
-  }, []);
+  }, [jwtInput]);
 
   useEffect(() => {
     if (!contentEditableRef.current) return;
