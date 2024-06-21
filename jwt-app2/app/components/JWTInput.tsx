@@ -1,15 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const JWTInput = ({ onDecode }) => {
-  const [jwt, setJwt] = useState("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5vbHV5b3JBYmkiLCJyb2xlIjoiU29mdHdhcmVTZWN1cml0eSIsImVtYWlsIjoibm9sdXlvckFiaUBleGFtcGxlLmNvbSIsImlhdCI6MTUxNjIzOTAyMn0.DxBQOTAZnLEeJxU9bsDzWyDpqMZcv8bqsdDlyEOlOVs");
-  const contentEditableRef = useRef(null);
+interface JWTInputProps {
+  onDecode: (jwt: string) => void;
+}
 
-  const getCaretPosition = (el) => {
+const JWTInput: React.FC<JWTInputProps> = ({ onDecode }) => {
+  const [jwt, setJwt] = useState(
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5vbHV5b3JBYmkiLCJyb2xlIjoiU29mdHdhcmVTZWN1cml0eSIsImVtYWlsIjoibm9sdXlvckFiaUBleGFtcGxlLmNvbSIsImlhdCI6MTUxNjIzOTAyMn0.DxBQOTAZnLEeJxU9bsDzWyDpqMZcv8bqsdDlyEOlOVs"
+  );
+  const contentEditableRef = useRef<HTMLDivElement>(null);
+
+  const getCaretPosition = (el: HTMLDivElement) => {
     let caretOffset = 0;
-    const doc = el.ownerDocument || el.document;
-    const win = doc.defaultView || doc.parentWindow;
+    const doc = el.ownerDocument || document;
+    const win = doc.defaultView || window;
     const sel = win.getSelection();
-    if (sel.rangeCount > 0) {
+    if (sel && sel.rangeCount > 0) {
       const range = sel.getRangeAt(0);
       const preCaretRange = range.cloneRange();
       preCaretRange.selectNodeContents(el);
@@ -19,16 +25,16 @@ const JWTInput = ({ onDecode }) => {
     return caretOffset;
   };
 
-  const setCaretPosition = (el, offset) => {
+  const setCaretPosition = (el: HTMLDivElement, offset: number) => {
     const range = document.createRange();
     const sel = window.getSelection();
     let charCount = 0;
     let found = false;
 
-    const traverseNodes = (node) => {
+    const traverseNodes = (node: Node) => {
       if (found) return;
       if (node.nodeType === 3) {
-        const nextCharCount = charCount + node.length;
+        const nextCharCount = charCount + (node as Text).length;
         if (nextCharCount >= offset) {
           range.setStart(node, offset - charCount);
           range.setEnd(node, offset - charCount);
@@ -44,17 +50,19 @@ const JWTInput = ({ onDecode }) => {
     };
 
     traverseNodes(el);
-    sel.removeAllRanges();
-    sel.addRange(range);
+    sel!.removeAllRanges();
+    sel!.addRange(range);
   };
 
-  const handleInput = (e) => {
-    const value = e.target.innerText;
+  const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
+    const value = (e.target as HTMLDivElement).innerText;
     setJwt(value);
     onDecode(value);
   };
 
   useEffect(() => {
+    if (!contentEditableRef.current) return;
+
     const caretPosition = getCaretPosition(contentEditableRef.current);
     const parts = jwt.split(".");
     const formattedJwt = parts
@@ -66,10 +74,8 @@ const JWTInput = ({ onDecode }) => {
       })
       .join("<span>.</span>");
 
-    if (contentEditableRef.current) {
-      contentEditableRef.current.innerHTML = formattedJwt;
-      setCaretPosition(contentEditableRef.current, caretPosition);
-    }
+    contentEditableRef.current.innerHTML = formattedJwt;
+    setCaretPosition(contentEditableRef.current, caretPosition);
   }, [jwt]);
 
   return (
@@ -80,10 +86,15 @@ const JWTInput = ({ onDecode }) => {
         className="w-full p-2 border border-gray-300 rounded"
         style={{ whiteSpace: "pre-wrap" }}
         onInput={handleInput}
-        placeholder="Enter your JWT here"
       >
-        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5vbHV5b3JBYmkiLCJyb2xlIjoiU29mdHdhcmVTZWN1cml0eSIsImVtYWlsIjoibm9sdXlvckFiaUBleGFtcGxlLmNvbSIsImlhdCI6MTUxNjIzOTAyMn0.DxBQOTAZnLEeJxU9bsDzWyDpqMZcv8bqsdDlyEOlOVs
+        {jwt}
       </div>
+      <style jsx>{`
+        [contenteditable]:empty:before {
+          content: attr(data-placeholder);
+          color: gray;
+        }
+      `}</style>
     </div>
   );
 };

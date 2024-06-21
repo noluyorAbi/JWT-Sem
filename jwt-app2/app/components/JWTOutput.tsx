@@ -27,7 +27,7 @@ const JWTOutput = ({ header, payload, signature, onHeaderChange, onPayloadChange
         <h2 className="font-bold">Header</h2>
         <textarea
           className="bg-white p-2 rounded w-full"
-          rows="5"
+          rows={5}
           value={JSON.stringify(header, null, 2)}
           onChange={handleHeaderChange}
         ></textarea>
@@ -36,7 +36,7 @@ const JWTOutput = ({ header, payload, signature, onHeaderChange, onPayloadChange
         <h2 className="font-bold">Payload</h2>
         <textarea
           className="bg-white p-2 rounded w-full"
-          rows="5"
+          rows={5}
           value={JSON.stringify(payload, null, 2)}
           onChange={handlePayloadChange}
         ></textarea>

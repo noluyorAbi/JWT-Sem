@@ -30,7 +30,6 @@ const CopyButton = ({ inputId, getText }) => {
           inputId === "jwt-area"
             ? "absolute end-2.5  bottom-0 translate-y-2 text-gray-900 dark:text-gray-400 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700 rounded-lg py-2 px-2.5 inline-flex items-center justify-center bg-white border-gray-200 border"
             : "absolute end-2.5  bottom-0 translate-y-2 text-gray-900 dark:text-gray-400 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700 rounded-lg py-2 px-2.5 inline-flex items-center justify-center bg-white border-gray-200 border"
-          //            : "absolute end-2.5 top-5 text-gray-900 dark:text-gray-400 hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700 rounded-lg py-2 px-2.5 inline-flex items-center justify-center bg-white border-gray-200 border"
         }
       >
         {copied ? (
@@ -82,14 +81,14 @@ const App = () => {
     payload: {},
     signature: "",
   });
-  const contentEditableRef = useRef(null);
+  const contentEditableRef = useRef<HTMLDivElement>(null);
 
-  const getCaretPosition = (el) => {
+  const getCaretPosition = (el: HTMLDivElement) => {
     let caretOffset = 0;
-    const doc = el.ownerDocument || el.document;
-    const win = doc.defaultView || doc.parentWindow;
+    const doc = el.ownerDocument || document;
+    const win = doc.defaultView || window;
     const sel = win.getSelection();
-    if (sel.rangeCount > 0) {
+    if (sel && sel.rangeCount > 0) {
       const range = sel.getRangeAt(0);
       const preCaretRange = range.cloneRange();
       preCaretRange.selectNodeContents(el);
@@ -99,16 +98,16 @@ const App = () => {
     return caretOffset;
   };
 
-  const setCaretPosition = (el, offset) => {
+  const setCaretPosition = (el: HTMLDivElement, offset: number) => {
     const range = document.createRange();
     const sel = window.getSelection();
     let charCount = 0;
     let found = false;
 
-    const traverseNodes = (node) => {
+    const traverseNodes = (node: Node) => {
       if (found) return;
       if (node.nodeType === 3) {
-        const nextCharCount = charCount + node.length;
+        const nextCharCount = charCount + (node as Text).length;
         if (nextCharCount >= offset) {
           range.setStart(node, offset - charCount);
           range.setEnd(node, offset - charCount);
@@ -124,17 +123,17 @@ const App = () => {
     };
 
     traverseNodes(el);
-    sel.removeAllRanges();
-    sel.addRange(range);
+    sel!.removeAllRanges();
+    sel!.addRange(range);
   };
 
-  const handleInput = (e) => {
-    const value = e.target.innerText;
+  const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
+    const value = (e.target as HTMLDivElement).innerText;
     setJwtInput(value);
     handleDecode(value);
   };
 
-  const handleDecode = (jwtToken) => {
+  const handleDecode = (jwtToken: string) => {
     const parts = jwtToken.split(".");
     if (parts.length === 3) {
       try {
@@ -155,6 +154,8 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    if (!contentEditableRef.current) return;
+
     const caretPosition = getCaretPosition(contentEditableRef.current);
     const parts = jwtInput.split(".");
     const formattedJwt = parts
@@ -166,13 +167,11 @@ const App = () => {
       })
       .join("<span>.</span>");
 
-    if (contentEditableRef.current) {
-      contentEditableRef.current.innerHTML = formattedJwt;
-      setCaretPosition(contentEditableRef.current, caretPosition);
-    }
+    contentEditableRef.current.innerHTML = formattedJwt;
+    setCaretPosition(contentEditableRef.current, caretPosition);
   }, [jwtInput]);
 
-  const handleHeaderChange = (e) => {
+  const handleHeaderChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     try {
       const header = JSON.parse(e.target.value);
       setDecodedJWT((prev) => ({ ...prev, header }));
@@ -181,7 +180,7 @@ const App = () => {
     }
   };
 
-  const handlePayloadChange = (e) => {
+  const handlePayloadChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     try {
       const payload = JSON.parse(e.target.value);
       setDecodedJWT((prev) => ({ ...prev, payload }));
@@ -190,7 +189,7 @@ const App = () => {
     }
   };
 
-  const handleSignatureChange = (e) => {
+  const handleSignatureChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDecodedJWT((prev) => ({ ...prev, signature: e.target.value }));
   };
 
@@ -211,7 +210,7 @@ const App = () => {
             style={{ whiteSpace: "pre-wrap" }}
             onInput={handleInput}
           >
-            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5vbHV5b3JBYmkiLCJyb2xlIjoiU29mdHdhcmVTZWN1cml0eSIsImVtYWlsIjoibm9sdXlvckFiaUBTb2Z0d2FyZVNlY3VyaXR5LmNvbSIsImlhdCI6MTUxNjIzOTAyMn0.pnhOLxcCFA1Icp5Bh21EN2HTcFuh9YBuIJBOAVRHpEI{" "}
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5vbHV5b3JBYmkiLCJyb2xlIjoiU29mdHdhcmVTZWN1cml0eSIsImVtYWlsIjoibm9sdXlvckFiaUBTb2Z0d2FyZVNlY3VyaXR5LmNvbSIsImlhdCI6MTUxNjIzOTAyMn0.pnhOLxcCFA1Icp5Bh21EN2HTcFuh9YBuIJBOAVRHpEI
           </div>
         </div>
 
@@ -226,7 +225,7 @@ const App = () => {
             </div>
             <textarea
               className="bg-white p-2 rounded w-full"
-              rows="5"
+              rows={5}
               value={JSON.stringify(decodedJWT.header, null, 2)}
               onChange={handleHeaderChange}
               style={{ color: "red" }}
@@ -242,7 +241,7 @@ const App = () => {
             </div>
             <textarea
               className="bg-white p-2 rounded w-full h-[12rem]"
-              rows="5"
+              rows={5}
               value={JSON.stringify(decodedJWT.payload, null, 2)}
               onChange={handlePayloadChange}
               style={{ color: "green" }}
