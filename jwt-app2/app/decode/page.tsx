@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import Header from "../components/Header";
+import Header from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const CopyButton = ({ inputId, getText }) => {
   const [copied, setCopied] = useState(false);
@@ -194,19 +195,19 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col dark:bg-gray-800">
       <Header />
       <main className="flex-1 container mx-auto p-4">
         <div className="mt-6">
-          <div className="flex items-center justify-between">
-            <h2 className="font-bold">Insert JWT below</h2>
+          <div className="flex items-center justify-between ">
+            <h2 className="font-bold dark:text-white ">Insert JWT below</h2>
             <CopyButton inputId="jwt-area" getText={() => jwtInput} />
           </div>
           <div
             ref={contentEditableRef}
             id="jwt-area"
             contentEditable
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2  rounded bg-white border-black border-4"
             style={{ whiteSpace: "pre-wrap" }}
             onInput={handleInput}
             spellCheck="false"
@@ -217,7 +218,7 @@ const App = () => {
         </div>
 
         <div className="p-4">
-          <div className="bg-gray-100 p-6 rounded-xl mt-4">
+          <div className="bg-gray-100 p-6 rounded-xl mt-4 dark:bg-gray-300">
             <div className="flex items-center justify-between">
               <h2 className="font-bold flex-grow">Header</h2>
               <CopyButton
@@ -234,7 +235,7 @@ const App = () => {
               spellCheck="false"
             ></textarea>
           </div>
-          <div className="bg-gray-100 p-6 rounded-xl mt-4">
+          <div className="bg-gray-100 p-6 rounded-xl mt-4 dark:bg-gray-300">
             <div className="flex items-center justify-between">
               <h2 className="font-bold flex-grow">Payload</h2>
               <CopyButton
@@ -251,7 +252,7 @@ const App = () => {
               spellCheck="false"
             ></textarea>
           </div>
-          <div className="bg-gray-100 p-6 rounded-xl mt-4">
+          <div className="bg-gray-100 p-6 rounded-xl mt-4 dark:bg-gray-300">
             <div className="flex items-center justify-between">
               <h2 className="font-bold flex-grow">Signature</h2>
               <CopyButton
@@ -269,6 +270,7 @@ const App = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

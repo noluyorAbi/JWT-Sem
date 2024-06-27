@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import Header from "../components/Header";
+import Header from "../components/Navbar";
 import { Base64 } from "js-base64";
 import CryptoJS from "crypto-js";
+import Footer from "../components/Footer";
 
 // Helper function to Base64 URL encode a string
 const base64UrlEncode = (str: string) => {
@@ -134,13 +135,13 @@ const EncodePage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col dark:bg-gray-800">
       <Header />
       <main className="flex-1 container mx-auto p-4">
         <div className="p-4 relative">
           <div className="relative">
             <textarea
-              className="w-full p-2 border border-gray-300 rounded h-[12rem]"
+              className="w-full p-2 border border-gray-300 bg-gray-200 rounded h-[12rem]"
               rows={5}
               placeholder='JSON payload e.g:
 {
@@ -158,7 +159,7 @@ const EncodePage = () => {
 
           <div className="relative mt-2">
             <input
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded bg-gray-200 "
               placeholder="Secret Key"
               value={secret}
               onChange={(e) => setSecret(e.target.value)}
@@ -197,6 +198,7 @@ const EncodePage = () => {
           )}
         </div>
       </main>
+      <Footer />
     </div>
   );
 };
