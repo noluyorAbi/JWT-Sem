@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 "use client";
 import React, { useState } from "react";
 import Header from "../components/Navbar";
@@ -73,7 +72,7 @@ function App() {
           RSA (Rivest–Shamir–Adleman) is one of the first public-key
           cryptosystems and is widely used for secure data transmission. In RSA,
           encryption keys are public, whereas the decryption keys are secret.
-          "e" is the public exponent, "d" is the private exponent, and "n" is
+          &dquot;e&dquot; is the public exponent, &dquot;d&dquot; is the private exponent, and &dquot;n&dquot; is
           the modulus.
         </p>
         <p className="text-center mb-6 font-bold">
