@@ -1,0 +1,20 @@
+{
+    "alg": "RS256",
+    "typ": "JWT",
+    "jku": "https://example.com/keys",
+    "jwk": {
+      "kty": "RSA",
+      "kid": "1b94c",
+      "n": "0vx7agoebGcQSuuPiLJXZptN4NH5H7g8",
+      "e": "AQAB"
+    },
+    "kid": "1b94c",
+    "x5u": "https://example.com/cert.pem",
+    "x5c": [
+      "MIICoTCCAYkA...",
+      "MIIClTCCAX0A..."
+    ],
+    "x5t": "SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+    "x5t#S256": "aSHA256ThumbprintValue",
+    "crit": ["exp", "nbf"]
+  }

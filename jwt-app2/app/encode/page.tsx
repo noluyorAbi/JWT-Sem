@@ -29,7 +29,7 @@ const CopyButton = ({ getText }: { getText: () => string }) => {
       },
       (err) => {
         console.error("Could not copy text: ", err);
-      }
+      },
     );
   };
 
@@ -114,7 +114,7 @@ const EncodePage = () => {
       // Create the signature
       const signature = createHmacSha256(
         `${base64Header}.${base64Payload}`,
-        secret
+        secret,
       );
 
       // Combine header, payload, and signature into a JWT
@@ -128,7 +128,7 @@ const EncodePage = () => {
         console.error("Unknown encoding error");
       }
       alert(
-        "Invalid payload or secret key. Please ensure the payload is valid JSON and the secret/key is correct."
+        "Invalid payload or secret key. Please ensure the payload is valid JSON and the secret/key is correct.",
       );
     }
   };
@@ -151,6 +151,7 @@ const EncodePage = () => {
 }'
               value={payload}
               onChange={(e) => setPayload(e.target.value)}
+              spellCheck="false"
             ></textarea>
             <CopyButton getText={() => payload} />
           </div>

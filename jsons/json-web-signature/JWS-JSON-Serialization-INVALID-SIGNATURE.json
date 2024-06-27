@@ -1,0 +1,16 @@
+{
+    "payload": "eyJpc3MiOiJqb2UiLA0KICJleHAiOjEzMDA4MTkzODAsDQogImh0dHA6Ly9leGFtcGxlLmNvbS9pc19yb290Ijp0cnVlfQ",
+    "signatures": [
+      {
+        "protected": "eyJhbGciOiJSUzI1NiJ9",
+        "header": { "kid": "2010-12-29" },
+        "signature": "cC4hiUPoj9Eetdgtv3hF80EGrhuB__dzERat0XF9g2VtQgr9PJbu3XOiZj5RZmh7AAuHIm4Bh..."
+      },
+      {
+        "protected": "eyJhbGciOiJFUzI1NiJ9",
+        "header": { "kid": "e9bc097a-ce51-4036-9562-d2ade882db0d" },
+        "signature": "DtEhU3ljbEg8L38VWAfUAqOyKAM6-Xx-F4GawxaepmXFCgfTjDxw5djxLa8ISlSAp\nmWQxfKTUJqPP3-Kg6NU1Q"
+      }
+    ]
+  }
+  

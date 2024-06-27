@@ -1,6 +1,13 @@
 import React from "react";
 
-const JWTOutput = ({ header, payload, signature, onHeaderChange, onPayloadChange, onSignatureChange }) => {
+const JWTOutput = ({
+  header,
+  payload,
+  signature,
+  onHeaderChange,
+  onPayloadChange,
+  onSignatureChange,
+}) => {
   const handleHeaderChange = (e) => {
     try {
       onHeaderChange(JSON.parse(e.target.value));
@@ -30,6 +37,7 @@ const JWTOutput = ({ header, payload, signature, onHeaderChange, onPayloadChange
           rows={5}
           value={JSON.stringify(header, null, 2)}
           onChange={handleHeaderChange}
+          spellCheck="false"
         ></textarea>
       </div>
       <div className="bg-gray-100 p-2 rounded mt-4">
@@ -39,6 +47,7 @@ const JWTOutput = ({ header, payload, signature, onHeaderChange, onPayloadChange
           rows={5}
           value={JSON.stringify(payload, null, 2)}
           onChange={handlePayloadChange}
+          spellCheck="false"
         ></textarea>
       </div>
       <div className="bg-gray-100 p-2 rounded mt-4">
@@ -47,6 +56,7 @@ const JWTOutput = ({ header, payload, signature, onHeaderChange, onPayloadChange
           className="bg-white p-2 rounded w-full"
           value={signature}
           onChange={handleSignatureChange}
+          spellCheck="false"
         ></textarea>
       </div>
     </div>

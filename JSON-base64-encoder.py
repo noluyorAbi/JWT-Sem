@@ -16,38 +16,40 @@ def encode_json_to_base64url(json_obj):
 
 def create_signature(header_encoded, payload_encoded, secret):
     signature_data = f"{header_encoded}.{payload_encoded}".encode('utf-8')
+    print("\nSignature Data:", signature_data)
     secret_bytes = secret.encode('utf-8')
     signature = hmac.new(secret_bytes, signature_data, hashlib.sha256).digest()
+    print("Generated Signature (raw):", signature)
     signature_base64url = base64.urlsafe_b64encode(signature).decode('utf-8').rstrip("=")
+    print("Generated Signature (encoded):", signature_base64url)
     return signature_base64url
 
 def encode_jwt(header, payload, secret):
     header_encoded = encode_json_to_base64url(header)
     payload_encoded = encode_json_to_base64url(payload)
-    signature_encoded = create_signature(header_encoded, payload_encoded, secret)
-    return f"{header_encoded}.{payload_encoded}.{signature_encoded}"
+    
+    if header['alg'] == 'none':
+        signature_encoded = ''
+    else:
+        signature_encoded = create_signature(header_encoded, payload_encoded, secret)
+    
+    jwt_parts = [header_encoded, payload_encoded, signature_encoded]
+    return '.'.join(jwt_parts)
 
 if __name__ == "__main__":
     header = {
-    "typ": "JWT",
-    "alg": "HS256"
-}
-    
-    payload = {
-        "username": "admin",
-        "admin": True
+        "alg": "HS256", # This is the algorithm used for signing the JWT can be set to "none" for no signature
+        "typ": "JWT"
     }
     
+    payload = {
+        "sub": "123456",
+        "nam": "SoftwareSecurity",
+        "iat": 1719007717
+    }
     
-    secret = """
-MIIBCgKCAQEAvoOtsfF5Gtkr2Swy0xzuUp5J3w8bJY5oF7TgDrkAhg1sFUEaCMlR
-YltE8jobFTyPo5cciBHD7huZVHLtRqdhkmPD4FSlKaaX2DfzqyiZaPhZZT62w7Hi
-gJlwG7M0xTUljQ6WBiIFW9By3amqYxyR2rOq8Y68ewN000VSFXy7FZjQ/CDA3wSl
-Q4KI40YEHBNeCl6QWXWxBb8AvHo4lkJ5zZyNje+uxq8St1WlZ8/5v55eavshcfD1
-0NSHaYIIilh9yic/xK4t20qvyZKe6Gpdw6vTyefw4+Hhp1gROwOrIa0X0alVepg9
-Jddv6V/d/qjDRzpJIop9DSB8qcF1X23pkQIDAQAB
-    """
+    secret = "secret" # This is the secret key used for signing the JWT this should be kept secret and be a hard to guess random string
     
-    jwt_encoded = encode_jwt(header, payload, secret)
-    print("JWT Encoded:")
+    jwt_encoded = encode_jwt(header, payload, secret.strip())
+    print("\nJWT Encoded:")
     print(jwt_encoded)

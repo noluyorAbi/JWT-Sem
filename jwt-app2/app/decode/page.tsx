@@ -14,7 +14,7 @@ const CopyButton = ({ inputId, getText }) => {
       },
       (err) => {
         console.error("Could not copy text: ", err);
-      }
+      },
     );
   };
 
@@ -74,7 +74,7 @@ const CopyButton = ({ inputId, getText }) => {
 
 const App = () => {
   const [jwtInput, setJwtInput] = useState(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5vbHV5b3JBYmkiLCJyb2xlIjoiU29mdHdhcmVTZWN1cml0eSIsImVtYWlsIjoibm9sdXlvckFiaUBTb2Z0d2FyZVNlY3VyaXR5LmNvbSIsImlhdCI6MTUxNjIzOTAyMn0.pnhOLxcCFA1Icp5Bh21EN2HTcFuh9YBuIJBOAVRHpEI"
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5vbHV5b3JBYmkiLCJyb2xlIjoiU29mdHdhcmVTZWN1cml0eSIsImVtYWlsIjoibm9sdXlvckFiaUBTb2Z0d2FyZVNlY3VyaXR5LmNvbSIsImlhdCI6MTUxNjIzOTAyMn0.pnhOLxcCFA1Icp5Bh21EN2HTcFuh9YBuIJBOAVRHpEI",
   );
   const [decodedJWT, setDecodedJWT] = useState({
     header: {},
@@ -209,6 +209,8 @@ const App = () => {
             className="w-full p-2 border border-gray-300 rounded"
             style={{ whiteSpace: "pre-wrap" }}
             onInput={handleInput}
+            spellCheck="false"
+            autoCorrect="off"
           >
             eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5vbHV5b3JBYmkiLCJyb2xlIjoiU29mdHdhcmVTZWN1cml0eSIsImVtYWlsIjoibm9sdXlvckFiaUBTb2Z0d2FyZVNlY3VyaXR5LmNvbSIsImlhdCI6MTUxNjIzOTAyMn0.pnhOLxcCFA1Icp5Bh21EN2HTcFuh9YBuIJBOAVRHpEI
           </div>
@@ -229,6 +231,7 @@ const App = () => {
               value={JSON.stringify(decodedJWT.header, null, 2)}
               onChange={handleHeaderChange}
               style={{ color: "red" }}
+              spellCheck="false"
             ></textarea>
           </div>
           <div className="bg-gray-100 p-6 rounded-xl mt-4">
@@ -245,6 +248,7 @@ const App = () => {
               value={JSON.stringify(decodedJWT.payload, null, 2)}
               onChange={handlePayloadChange}
               style={{ color: "green" }}
+              spellCheck="false"
             ></textarea>
           </div>
           <div className="bg-gray-100 p-6 rounded-xl mt-4">
@@ -260,6 +264,7 @@ const App = () => {
               value={decodedJWT.signature}
               onChange={handleSignatureChange}
               style={{ color: "blue" }}
+              spellCheck="false"
             ></textarea>
           </div>
         </div>

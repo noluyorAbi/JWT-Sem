@@ -1,0 +1,10 @@
+{
+    "iss": "https://example.com/",
+    "sub": "user@example.com",
+    "aud": "https://api.example.com/",
+    "exp": 1629847200,
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "email_verified": true,
+    "locale": "en-US"
+}

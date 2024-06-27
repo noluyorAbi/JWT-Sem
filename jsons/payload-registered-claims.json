@@ -1,0 +1,9 @@
+{
+    "iss": "auth.example.com",
+    "sub": "1234567890",
+    "aud": "example.com",
+    "exp": 1716239022,
+    "nbf": 1516239022,
+    "iat": 1516239022,
+    "jti": "unique-id-1234567890"
+}

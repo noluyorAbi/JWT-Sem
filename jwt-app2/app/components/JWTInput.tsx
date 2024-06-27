@@ -6,7 +6,7 @@ interface JWTInputProps {
 
 const JWTInput: React.FC<JWTInputProps> = ({ onDecode }) => {
   const [jwt, setJwt] = useState(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5vbHV5b3JBYmkiLCJyb2xlIjoiU29mdHdhcmVTZWN1cml0eSIsImVtYWlsIjoibm9sdXlvckFiaUBleGFtcGxlLmNvbSIsImlhdCI6MTUxNjIzOTAyMn0.DxBQOTAZnLEeJxU9bsDzWyDpqMZcv8bqsdDlyEOlOVs"
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5vbHV5b3JBYmkiLCJyb2xlIjoiU29mdHdhcmVTZWN1cml0eSIsImVtYWlsIjoibm9sdXlvckFiaUBleGFtcGxlLmNvbSIsImlhdCI6MTUxNjIzOTAyMn0.DxBQOTAZnLEeJxU9bsDzWyDpqMZcv8bqsdDlyEOlOVs",
   );
   const contentEditableRef = useRef<HTMLDivElement>(null);
 

@@ -1,0 +1,20 @@
+{
+    "alg": "RS256",                                   // Der Signaturalgorithmus, der verwendet wird, hier RSA mit SHA-256.
+    "typ": "JWT",                                    // Der Medientyp des Tokens, hier JSON Web Token (JWT).
+    "jku": "https://example.com/keys",              // Eine URL, die auf ein Set von JSON Web Keys (JWKs) verweist.
+    "jwk": {                                       // Ein JSON Web Key (JWK), der den öffentlichen Schlüssel enthält.
+      "kty": "RSA",                               // Der Typ des Schlüssels, hier RSA.
+      "kid": "1b94c",                            // Eine Kennung, die diesen spezifischen Schlüssel identifiziert.
+      "n": "0vx7agoebGcQSuuPiLJXZptN4NH5H7g8",  // Der Modulus des RSA-Schlüssels.
+      "e": "AQAB"                              // Der Exponent des RSA-Schlüssels.
+    },
+    "kid": "1b94c",                         // Eine Kennung, die einen spezifischen Schlüssel in einem JWK-Set identifiziert.
+    "x5u": "https://example.com/cert.pem", // Eine URL, die auf ein X.509-Zertifikat verweist.
+    "x5c": [                              // Eine Kette von X.509-Zertifikaten, Base64-URL-codiert.
+      "MIICoTCCAYkA...",                 // Das erste Zertifikat in der Kette.
+      "MIIClTCCAX0A..."                 // Das zweite Zertifikat in der Kette.
+    ],
+    "x5t": "SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c", // Ein SHA-1-Hashwert des X.509-Zertifikats.
+    "x5t#S256": "aSHA256ThumbprintValue",                // Ein SHA-256-Hashwert des X.509-Zertifikats.
+    "crit": ["exp", "nbf"]                              // Eine Liste von kritischen Header-Parametern, die verstanden werden müssen.
+}

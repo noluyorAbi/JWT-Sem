@@ -1,0 +1,9 @@
+{
+    "iss": "auth.example.com",    // Issuer: Der Herausgeber des Tokens, typischerweise der Authentifizierungsserver.
+    "sub": "1234567890",          // Subject: Das Subjekt des Tokens, normalerweise die Benutzer-ID.
+    "aud": "example.com",         // Audience: Der Empfänger des Tokens, normalerweise die Domain oder die Zielgruppe, für die der Token bestimmt ist.
+    "exp": 1716239022,            // Expiration Time: Das Ablaufdatum und die Uhrzeit des Tokens als Unix-Zeitstempel.
+    "nbf": 1516239022,            // Not Before: Der Zeitpunkt, ab dem der Token gültig ist, als Unix-Zeitstempel.
+    "iat": 1516239022,            // Issued At: Der Zeitpunkt, zu dem der Token erstellt wurde, als Unix-Zeitstempel.
+    "jti": "unique-id-1234567890" // JWT ID: Eine eindeutige Kennung für den Token, um Replays zu verhindern.
+  }

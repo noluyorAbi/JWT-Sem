@@ -3,22 +3,45 @@ import Link from "next/link";
 
 const WelcomePage = () => {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100">
-      <h1 className="text-4xl font-bold mb-4">Welcome to the JWT Tool</h1>
-      <p className="text-lg mb-8 text-center max-w-md">
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 p-4">
+      <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center">
+        Welcome to the JWT Tool App
+      </h1>
+      <p className="text-base md:text-lg mb-8 text-center max-w-md md:max-w-xl">
         This website provides tools to encode and decode JSON Web Tokens (JWTs).
         You can use the encode tool to create JWTs from your payload and secret
         key, and the decode tool to decode and inspect the contents of your
         JWTs.
       </p>
-      <div className="flex space-x-4">
+      <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center">
+        Why this page if{" "}
+        <a href="https://jwt.io/" className="text-blue-500 hover:text-blue-800">
+          JWT.io
+        </a>{" "}
+        exists?
+      </h2>
+      <p className="text-base md:text-lg mb-8 text-center max-w-md md:max-w-xl">
+        I created this site because I appreciated the functionality of the
+        jwt.io site but noticed some minor issues, such as broken scrolling in
+        the input fields, which sometimes caused the text to scroll away, and
+        the absence of copy buttons for quick copying. Motivated by these issues
+        and the pentesting challenges I did online, which required extensive
+        testing of JWT encoding and decoding with quick copy paste trial and
+        errors, I decided to implement my own version of a JWT encoder/decoder
+        with simple functions tailored to my needs.
+      </p>
+      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mb-8">
         <Link href="/decode">
-          <p className="underline text-blue-600 text-xl">Decode</p>
+          <p className="underline text-blue-600 text-xl text-center">Decode</p>
         </Link>
         <Link href="/encode">
-          <p className="underline text-blue-600 text-xl">Encode</p>
+          <p className="underline text-blue-600 text-xl text-center">Encode</p>
         </Link>
       </div>
+      <p className="text-sm text-gray-500 text-center">
+        Created by A.A. for the seminar &quot;Software Security&quot; @ LMU
+        Munich
+      </p>
     </div>
   );
 };

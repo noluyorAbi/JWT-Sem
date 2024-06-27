@@ -1,0 +1,7 @@
+{
+    "user_id": "12345",
+    "role": "admin",
+    "department": "sales",
+    "session_id": "abcde12345",
+    "custom_flag": true
+}
