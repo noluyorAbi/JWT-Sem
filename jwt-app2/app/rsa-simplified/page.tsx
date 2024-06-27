@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client";
 import React, { useState } from "react";
 import Header from "../components/Navbar";
@@ -11,21 +12,50 @@ function isPrime(num) {
   return true;
 }
 
+function generateRandomPrime(limit) {
+  let prime;
+  while (true) {
+    prime = Math.floor(Math.random() * limit);
+    if (isPrime(prime)) {
+      return prime;
+    }
+  }
+}
+
 function App() {
   const [p, setP] = useState("");
   const [q, setQ] = useState("");
+  const [upperLimit, setUpperLimit] = useState(10000); // Set default upper limit
+  const [useRandomPrimes, setUseRandomPrimes] = useState(false);
   const [output, setOutput] = useState("");
   const [publicKey, setPublicKey] = useState("");
   const [privateKey, setPrivateKey] = useState("");
 
   function handleCalculate() {
-    const primeP = parseInt(p);
-    const primeQ = parseInt(q);
-    if (!isPrime(primeP) || !isPrime(primeQ)) {
-      setOutput("Error: One or both numbers are not primes.");
-      setPublicKey("");
-      setPrivateKey("");
-      return;
+    let primeP, primeQ;
+
+    if (useRandomPrimes) {
+      if (!upperLimit) {
+        setOutput(
+          "Error: Please provide an upper limit for random prime generation.",
+        );
+        return;
+      } else if (upperLimit > 10000) {
+        setOutput("Error: Upper limit is too high. Maximum is 10.000");
+        return;
+      }
+      const limit = upperLimit.toString();
+      primeP = generateRandomPrime(limit);
+      primeQ = generateRandomPrime(limit);
+    } else {
+      primeP = parseInt(p);
+      primeQ = parseInt(q);
+      if (!isPrime(primeP) || !isPrime(primeQ)) {
+        setOutput("Error: One or both numbers are not primes.");
+        setPublicKey("");
+        setPrivateKey("");
+        return;
+      }
     }
 
     const n = primeP * primeQ;
@@ -62,9 +92,9 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100">
-      <Header></Header>
-      <div className="container mx-auto p-4">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 flex flex-col">
+      <Header />
+      <div className="container mx-auto p-4 flex-grow">
         <h1 className="text-center text-2xl font-bold mb-4">
           RSA Encryption Parameters Calculator
         </h1>
@@ -72,7 +102,7 @@ function App() {
           RSA (Rivest–Shamir–Adleman) is one of the first public-key
           cryptosystems and is widely used for secure data transmission. In RSA,
           encryption keys are public, whereas the decryption keys are secret.
-          &dquot;e&dquot; is the public exponent, &dquot;d&dquot; is the private exponent, and &dquot;n&dquot; is
+          "e" is the public exponent, "d" is the private exponent, and "n" is
           the modulus.
         </p>
         <p className="text-center mb-6 font-bold">
@@ -80,28 +110,60 @@ function App() {
           idea behind the algorithm. The real algorithm is more complex.
         </p>
         <div className="mb-4">
-          <label htmlFor="p" className="block text-sm font-bold mb-2">
-            Enter prime p:
+          <label className="inline-flex items-center">
+            <input
+              type="checkbox"
+              className="form-checkbox"
+              checked={useRandomPrimes}
+              onChange={(e) => setUseRandomPrimes(e.target.checked)}
+            />
+            <span className="ml-2">Use random primes up to the limit</span>
           </label>
-          <input
-            type="number"
-            id="p"
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
-            onChange={(e) => setP(e.target.value)}
-          />
         </div>
-        <div className="mb-4">
-          <label htmlFor="q" className="block text-sm font-bold mb-2">
-            Enter prime q:
-          </label>
-          <input
-            type="number"
-            id="q"
-            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-          />
-        </div>
+        {!useRandomPrimes && (
+          <>
+            <div className="mb-4">
+              <label htmlFor="p" className="block text-sm font-bold mb-2">
+                Enter prime p:
+              </label>
+              <input
+                type="number"
+                id="p"
+                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
+                onChange={(e) => setP(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="q" className="block text-sm font-bold mb-2">
+                Enter prime q:
+              </label>
+              <input
+                type="number"
+                id="q"
+                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+              />
+            </div>
+          </>
+        )}
+        {useRandomPrimes && (
+          <div className="mb-4">
+            <label
+              htmlFor="upperLimit"
+              className="block text-sm font-bold mb-2"
+            >
+              Enter upper limit for random primes:
+            </label>
+            <input
+              type="number"
+              id="upperLimit"
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-black"
+              value={upperLimit}
+              onChange={(e) => setUpperLimit(parseInt(e.target.value))}
+            />
+          </div>
+        )}
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           onClick={handleCalculate}
