@@ -140,6 +140,10 @@ const EncodePage = () => {
       <main className="flex-1 container mx-auto p-4">
         <div className="p-4 relative">
           <div className="relative">
+            <h2 className="font-bold dark:text-white ">
+              Insert Payload below:
+            </h2>
+
             <textarea
               className="w-full p-2 border border-gray-300 bg-gray-200 rounded h-[12rem]"
               rows={5}
@@ -157,7 +161,10 @@ const EncodePage = () => {
             <CopyButton getText={() => payload} />
           </div>
 
+
           <div className="relative mt-2">
+          <h2 className="font-bold dark:text-white ">Insert Secret below:</h2>
+
             <input
               className="w-full p-2 border border-gray-300 rounded bg-gray-200 "
               placeholder="Secret Key"

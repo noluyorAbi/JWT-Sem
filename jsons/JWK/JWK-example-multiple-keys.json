@@ -1,0 +1,21 @@
+{
+  "keys": [
+    {
+      "kty": "RSA",
+      "use": "sig",
+      "alg": "RS256",
+      "kid": "1b94c",
+      "n": "0vx7agoebGcQS...",
+      "e": "AQAB"
+    },
+    {
+      "kty": "EC",
+      "use": "enc",
+      "alg": "ES256",
+      "kid": "1e9g",
+      "crv": "P-256",
+      "x": "f83OJ3D2xF4P38G-KYSoWNmqj9g",
+      "y": "x_FEzRu9vUq3Z-3B5o3g44MXzE"
+    }
+  ]
+}
